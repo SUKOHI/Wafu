@@ -59,9 +59,9 @@ class Wafu {
 
         $genders = $this->_genders;
 
-        if($other_flag) {
+        if(!$other_flag) {
 
-            unserialize($genders[0]);
+            unset($genders[0]);
 
         }
 
