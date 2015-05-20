@@ -61,6 +61,30 @@ Usage
             var_dump(Wafu::regionPrefectureIds());  // Prefecture IDs by regions
 
         }
+
+        // Get Japanese Era from Common Era
+
+        var_dump(Wafu::japaneseEra(1977));
+
+        /*  Output
+
+            array(3) {
+              ["era_name"]=>
+              string(6) "昭和"
+              ["era_year"]=>
+              int(52)
+              ["era_full_year"]=>
+              string(11) "昭和52年"
+            }
+
+         */
+
+        echo Wafu::japaneseEraYear(1989);   // 平成元年
+
+        // Get Common Era from Japanese Era
+
+        echo Wafu::CommonEraYear('昭和52年');  // 1977
+        echo Wafu::CommonEraYear('明治元年');   // 1868
         
 License
 ====

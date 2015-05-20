@@ -245,4 +245,82 @@ class Wafu {
 
     }
 
+    public function japaneseEra($year) {
+
+        $era_name = '';
+        $era_year = 0;
+        
+        if ($year >= 1989) {
+
+            $era_name = '平成';
+            $era_year = $year - 1988;
+
+        } elseif ($year >= 1926) {
+
+            $era_name = '昭和';
+            $era_year = $year - 1925;
+
+        } elseif ($year >= 1912) {
+
+            $era_name = '大正';
+            $era_year = $year - 1911;
+
+        } else {
+
+            $era_name = '明治';
+            $era_year = $year - 1867;
+
+        }
+
+        $era_year_corrected = ($era_year == 1) ? '元' : $era_year;
+
+        return [
+            'era_name' => $era_name,
+            'era_year' => $era_year,
+            'era_full' => $era_name . $era_year_corrected .'年'
+        ];
+
+    }
+
+    public function japaneseEraYear($year) {
+
+        $era_values = $this->japaneseEra($year);
+        return $era_values['era_full'];
+
+    }
+
+    public function CommonEraYear($japanese_era_year) {
+
+        $year = -1;
+        $japanese_era_year = mb_convert_kana($japanese_era_year, 'n');
+
+        if(preg_match('!(明治|大正|昭和|平成)([0-9]{1,2}|元)年!', $japanese_era_year, $matches)) {
+
+            $era_name = $matches[1];
+            $era_year = ($matches[2] == '元') ? 1 : $matches[2];
+
+            if($era_name == '平成') {
+
+                $year = $era_year + 1988;
+
+            } else if($era_name == '昭和') {
+
+                $year = $era_year + 1925;
+
+            } else if($era_name == '大正') {
+
+                $year = $era_year + 1911;
+
+            } else if($era_name == '明治') {
+
+                $year = $era_year + 1867;
+
+            }
+
+        }
+
+        return $year;
+
+    }
+
 }
