@@ -342,7 +342,7 @@ class Wafu {
 
         if(!$cache_flag && \Cache::has($cache_key)) {
 
-            \Cache::forget($cache_key);echo "test";
+            \Cache::forget($cache_key);
 
         }
 
