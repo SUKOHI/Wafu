@@ -245,4 +245,140 @@ class Wafu {
 
     }
 
+    public function japaneseEra($year) {
+
+        $era_name = '';
+        $era_year = 0;
+
+        if ($year >= 1989) {
+
+            $era_name = '平成';
+            $era_year = $year - 1988;
+
+        } elseif ($year >= 1926) {
+
+            $era_name = '昭和';
+            $era_year = $year - 1925;
+
+        } elseif ($year >= 1912) {
+
+            $era_name = '大正';
+            $era_year = $year - 1911;
+
+        } else {
+
+            $era_name = '明治';
+            $era_year = $year - 1867;
+
+        }
+
+        $era_year_corrected = ($era_year == 1) ? '元' : $era_year;
+
+        return [
+            'era_name' => $era_name,
+            'era_year' => $era_year,
+            'era_full' => $era_name . $era_year_corrected .'年'
+        ];
+
+    }
+
+    public function japaneseEraYear($year) {
+
+        $era_values = $this->japaneseEra($year);
+        return $era_values['era_full'];
+
+    }
+
+    public function CommonEraYear($japanese_era_year) {
+
+        $year = -1;
+        $japanese_era_year = mb_convert_kana($japanese_era_year, 'n');
+
+        if(preg_match('!(明治|大正|昭和|平成)([0-9]{1,2}|元)年!', $japanese_era_year, $matches)) {
+
+            $era_name = $matches[1];
+            $era_year = ($matches[2] == '元') ? 1 : $matches[2];
+
+            if($era_name == '平成') {
+
+                $year = $era_year + 1988;
+
+            } else if($era_name == '昭和') {
+
+                $year = $era_year + 1925;
+
+            } else if($era_name == '大正') {
+
+                $year = $era_year + 1911;
+
+            } else if($era_name == '明治') {
+
+                $year = $era_year + 1867;
+
+            }
+
+        }
+
+        return $year;
+
+    }
+
+    public function nationalDays($start_date, $end_date, $cache_flag = true) {
+
+        $date_correct = function($date) {
+
+            if(gettype($date) =='object' && get_class($date) == 'Carbon\Carbon') {
+
+                return $date->format('Y-m-d');
+
+            }
+            return $date;
+
+        };
+
+        $start_date = $date_correct($start_date);
+        $end_date = $date_correct($end_date);
+        $cache_key = 'japanese_national_days_'. $start_date .'_'. $end_date;
+
+        if(!$cache_flag && \Cache::has($cache_key)) {
+
+            \Cache::forget($cache_key);echo "test";
+
+        }
+
+        return \Cache::rememberForever($cache_key, function() use($start_date, $end_date) {
+
+            $national_days = [];
+            $url = 'https://www.google.com/calendar/feeds/'. urlencode('japanese__ja@holiday.calendar.google.com') .'/public/basic'.
+                '?start-min='. date($start_date .'\T00:00:00\Z') .
+                '&start-max='. date($end_date .'\T00:00:00\Z') .'&max-results=100&alt=json';
+
+            if($json = file_get_contents($url)) {
+
+                $json_data = json_decode($json, true);
+
+                if(!empty($json_data['feed']['entry'])) {
+
+                    foreach ($json_data['feed']['entry'] as $value) {
+
+                        $title = $value['title']['$t'];
+                        $date = preg_replace('#\A.*?(2\d{7})[^/]*\z#i', '$1', $value['id']['$t']);
+                        $date2 = preg_replace('/\A(\d{4})(\d{2})(\d{2})/', '$1-$2-$3', $date);
+                        $national_days[$date2] = $title;
+
+                    }
+
+                    ksort($national_days);
+                    return $national_days;
+
+                }
+
+            }
+
+            return $national_days;
+
+        });
+
+    }
+
 }
