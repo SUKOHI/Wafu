@@ -47,6 +47,76 @@ class Wafu {
 
     }
 
+    // Date
+
+    public function date($format, $time = '') {
+
+        if(!is_object($time) || get_class($time) != 'Carbon\Carbon') {
+
+            $time = new Carbon($time);
+
+        }
+
+        $format = preg_replace_callback('|\{([YymndjGgHhiswa])\}|', function($matches) use($time) {
+
+            $text = '';
+            $symbol = $matches[1];
+
+            switch($symbol) {
+
+                case 'Y':
+                    $text = 'Y年';
+                    break;
+                case 'y':
+                    $text = 'y年';
+                    break;
+                case 'm':
+                    $text = 'm月';
+                    break;
+                case 'n':
+                    $text = 'n月';
+                    break;
+                case 'd':
+                    $text = 'd日';
+                    break;
+                case 'j':
+                    $text = 'j日';
+                    break;
+                case 'G':
+                    $text = 'G時';
+                    break;
+                case 'g':
+                    $text = 'g時';
+                    break;
+                case 'H':
+                    $text = 'H時';
+                    break;
+                case 'h':
+                    $text = 'h時';
+                    break;
+                case 'i':
+                    $text = 'i分';
+                    break;
+                case 's':
+                    $text = 's秒';
+                    break;
+                case 'w':
+                    $text = $this->weekName($time->dayOfWeek);
+                    break;
+                case 'a':
+                    $text = ($time->format('a') == 'am') ? '午前' : '午後';
+                    break;
+
+            }
+
+            return $text;
+
+        }, $format);
+
+        return $time->format($format);
+
+    }
+
     // Gender
 
     private $_genders = [

@@ -42,6 +42,29 @@ Usage
 
     }
 
+**Date**
+
+    echo Wafu::date($format, $time);
+    
+    // $format: See the below.
+    // $time: (Skippable) Timestamp, date format or Carbon instance
+
+    echo Wafu::date('{Y}');    // 2015年
+    echo Wafu::date('{y}');    // 15年
+    echo Wafu::date('{m}');    // 01月
+    echo Wafu::date('{n}');    // 1月
+    echo Wafu::date('{d}');    // 01日
+    echo Wafu::date('{j}');    // 1日
+    echo Wafu::date('{G}');    // 19時
+    echo Wafu::date('{g}');    // 7時
+    echo Wafu::date('{H}');    // 07時, 19時
+    echo Wafu::date('{h}');    // 07時
+    echo Wafu::date('{i}');    // 01分
+    echo Wafu::date('{s}');    // 01秒
+    echo Wafu::date('{w}');    // 日〜土
+    echo Wafu::date('{a}');    // 午前, 午後
+    echo Wafu::date('{Y}{m}{d} {H}{i}（{w}）');    // 2015年05月23日 20時11分（土）
+
 
 **Prefecture**
 
