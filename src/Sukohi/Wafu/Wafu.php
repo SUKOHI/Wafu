@@ -57,7 +57,7 @@ class Wafu {
 
         }
 
-        $format = preg_replace_callback('|\{([YymndjGgHhiswa])\}|', function($matches) use($time) {
+        $format = preg_replace_callback('|\{([YymndjGgHhiswaE])\}|', function($matches) use($time) {
 
             $text = '';
             $symbol = $matches[1];
@@ -105,6 +105,9 @@ class Wafu {
                     break;
                 case 'a':
                     $text = ($time->format('a') == 'am') ? '午前' : '午後';
+                    break;
+                case 'E':
+                    $text = $this->japaneseEraYear($time->year);
                     break;
 
             }
