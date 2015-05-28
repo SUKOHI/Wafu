@@ -118,13 +118,19 @@ Usage
 
     // Simple Way
 
+    $national_days = Wafu::nationalDays();
+    var_dump($national_days);   // National days of this year
+    
+    
+    // with a Specific Range
+
     $start_date = '2015-01-01';
     $end_date = '2015-12-31';
     $national_days = Wafu::nationalDays($start_date, $end_date);
     var_dump($national_days);
 
 
-    // Using Carbon
+    // with a Specific Range(Using Carbon)
 
     $start_date = Carbon::today();
     $end_date = $start_date->copy()->addYear();

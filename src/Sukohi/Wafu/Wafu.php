@@ -396,7 +396,7 @@ class Wafu {
 
     }
 
-    public function nationalDays($start_date, $end_date, $cache_flag = true) {
+    public function nationalDays($start_date = '', $end_date = '', $cache_flag = true) {
 
         $date_correct = function($date) {
 
@@ -408,6 +408,18 @@ class Wafu {
             return $date;
 
         };
+
+        if(empty($start_date)) {
+
+            $start_date = date('Y-01-01');
+
+        }
+
+        if(empty($end_date)) {
+
+            $end_date = date('Y-12-31');
+
+        }
 
         $start_date = $date_correct($start_date);
         $end_date = $date_correct($end_date);
