@@ -172,22 +172,22 @@ class Wafu {
         ];
         $date = preg_replace($replacements, '', $date);
         $patterns = [
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分([\d]+)!',
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分!',
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時!',
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+):([\d]+)!',
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+)!',
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日!',
-            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分([\d]+)!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+):([\d]+)!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+)!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日!',
+            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月!',
             '!(明治|大正|昭和|平成[\d]+)年!',
-            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分([\d]+)!',
-            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分!',
-            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+)時!',
-            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+):([\d]+)!',
-            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+)!',
-            '!(M|T|S|H[\d]+).([\d]+).([\d]+)!',
-            '!(M|T|S|H[\d]+).([\d]+)!',
-            '!(M|T|S|H[\d]+)!',
+            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分([\d]+)!',
+            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分!',
+            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+)時!',
+            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+):([\d]+)!',
+            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+)!',
+            '!((M|T|S|H)[\d]+).([\d]+).([\d]+)!',
+            '!((M|T|S|H)[\d]+).([\d]+)!',
+            '!((M|T|S|H)[\d]+)!',
         ];
 
         foreach ($patterns as $index => $pattern) {
@@ -197,27 +197,27 @@ class Wafu {
                 $year = $this->commonEraYear($matches[1]);
                 $matches_count = count($matches);
 
-                if($matches_count == 7) {
+                if($matches_count == 8) {
 
-                    return Carbon::create($year, $matches[2], $matches[3], $matches[4], $matches[5], $matches[6]);
+                    return Carbon::create($year, $matches[3], $matches[4], $matches[5], $matches[6], $matches[7]);
+
+                } else if($matches_count == 7) {
+
+                    return Carbon::create($year, $matches[3], $matches[4], $matches[5], $matches[6], 0);
 
                 } else if($matches_count == 6) {
 
-                    return Carbon::create($year, $matches[2], $matches[3], $matches[4], $matches[5], 0);
+                    return Carbon::create($year, $matches[3], $matches[4], $matches[5], 0, 0);
 
                 } else if($matches_count == 5) {
 
-                    return Carbon::create($year, $matches[2], $matches[3], $matches[4], 0, 0);
+                    return Carbon::create($year, $matches[3], $matches[4], 0, 0, 0);
 
                 } else if($matches_count == 4) {
 
-                    return Carbon::create($year, $matches[2], $matches[3], 0, 0, 0);
+                    return Carbon::create($year, $matches[3], 1, 0, 0, 0);
 
-                } else if($matches_count == 3) {
-
-                    return Carbon::create($year, $matches[2], 1, 0, 0, 0);
-
-                } else if($matches_count == 2) {
+                } else if($matches_count == 3 || $matches_count == 2) {
 
                     return Carbon::create($year, 1, 1, 0, 0, 0);
 
