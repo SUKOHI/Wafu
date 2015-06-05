@@ -91,7 +91,7 @@ class Wafu {
 
         }
 
-        $format = preg_replace_callback('|\{([YymndjGgHhiswaE])\}|', function($matches) use($time) {
+        $format = preg_replace_callback('|\{([YymndjGgHhiswaEFf])\}|', function($matches) use($time) {
 
             $text = '';
             $symbol = $matches[1];
@@ -142,6 +142,12 @@ class Wafu {
                     break;
                 case 'E':
                     $text = $this->japaneseEraYear($time->year);
+                    break;
+                case 'F':
+                    $text = 'Y年m月d日（'. $this->weekName($time->dayOfWeek) .'） H時i分';
+                    break;
+                case 'f':
+                    $text = 'Y年m月d日（'. $this->weekName($time->dayOfWeek) .'） H:i';
                     break;
 
             }

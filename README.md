@@ -75,8 +75,13 @@ Usage
     echo Wafu::date('{s}');    // 01秒
     echo Wafu::date('{w}');    // 日〜土
     echo Wafu::date('{a}');    // 午前, 午後
-    echo Wafu::date('{Y}{m}{d} {H}{i}（{w}）');    // 2015年05月23日 20時11分（土）
+    echo Wafu::date('{Y}{m}{d}（{w}） {H}{i}');    // 2015年05月23日（土） 20時11分
+    echo Wafu::date('{F}');    // 2015年05月23日（土） 20時11分
+    echo Wafu::date('{f}');    // 2015年05月23日（土） 20:11
 
+    * You can also use normal date formats like the below.
+    
+    echo Wafu::date('{Y}{m}{d} H:i');    // 2015年05月23日（土） 20:11
 
 **Prefecture**
 
