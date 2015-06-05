@@ -126,10 +126,33 @@ Usage
 
     // Get Common Era from Japanese Era
 
-    echo Wafu::CommonEraYear('昭和52年');  // 1977
-    echo Wafu::CommonEraYear('明治元年');   // 1868
+    echo Wafu::commonEraYear('昭和52年');  // 1977
+    echo Wafu::commonEraYear('明治元年');   // 1868
+    echo Wafu::commonEraYear('S52年');  // 1977
+    echo Wafu::commonEraYear('M元年');   // 1868
+    echo Wafu::commonEraYear('S52');    // 1977
+    echo Wafu::commonEraYear('M1');   // 1868
         
+
+**Convert Japanese Date to Datetime (Carbon)**
         
+    $dt = Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時11分29秒');
+    $dt = Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時11分');
+    $dt = Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時');
+    $dt = Wafu::convertJapaneseDate('平成２７年05月23日（土） 20:11:29');
+    $dt = Wafu::convertJapaneseDate('平成２７年05月23日（土） 20:11');
+    $dt = Wafu::convertJapaneseDate('平成２７年05月23日（土）');
+    $dt = Wafu::convertJapaneseDate('平成２７年05月');
+    $dt = Wafu::convertJapaneseDate('平成２７年');
+    $dt = Wafu::convertJapaneseDate('H27.5.23（土） 20時11分29秒');
+    $dt = Wafu::convertJapaneseDate('H27.5.23（土） 20時11分');
+    $dt = Wafu::convertJapaneseDate('H27.5.23（土） 20:11:29');
+    $dt = Wafu::convertJapaneseDate('H27.5.23（土） 20:11');
+    $dt = Wafu::convertJapaneseDate('H27.5.23（土）');
+    $dt = Wafu::convertJapaneseDate('H27.5');
+    $dt = Wafu::convertJapaneseDate('H27');
+    
+    
 **National Days**
 
     // Simple Way

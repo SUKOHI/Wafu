@@ -160,6 +160,77 @@ class Wafu {
 
     }
 
+    // Convert Japanese Date
+
+    public function convertJapaneseDate($date) {
+
+        $date = trim(mb_convert_kana($date, 'ns'));
+        $week_name_pattern = implode('|', $this->_week_names);
+        $replacements = [
+            '!（('. $week_name_pattern .')）!',
+            '!\(('. $week_name_pattern .')\）!'
+        ];
+        $date = preg_replace($replacements, '', $date);
+        $patterns = [
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分([\d]+)!',
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分!',
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時!',
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+):([\d]+)!',
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+)!',
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月([\d]+)日!',
+            '!(明治|大正|昭和|平成[\d]+年)([\d]+)月!',
+            '!(明治|大正|昭和|平成[\d]+)年!',
+            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分([\d]+)!',
+            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分!',
+            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+)時!',
+            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+):([\d]+)!',
+            '!(M|T|S|H[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+)!',
+            '!(M|T|S|H[\d]+).([\d]+).([\d]+)!',
+            '!(M|T|S|H[\d]+).([\d]+)!',
+            '!(M|T|S|H[\d]+)!',
+        ];
+
+        foreach ($patterns as $index => $pattern) {
+
+            if(preg_match($pattern, $date, $matches)) {
+
+                $year = $this->commonEraYear($matches[1]);
+                $matches_count = count($matches);
+
+                if($matches_count == 7) {
+
+                    return Carbon::create($year, $matches[2], $matches[3], $matches[4], $matches[5], $matches[6]);
+
+                } else if($matches_count == 6) {
+
+                    return Carbon::create($year, $matches[2], $matches[3], $matches[4], $matches[5], 0);
+
+                } else if($matches_count == 5) {
+
+                    return Carbon::create($year, $matches[2], $matches[3], $matches[4], 0, 0);
+
+                } else if($matches_count == 4) {
+
+                    return Carbon::create($year, $matches[2], $matches[3], 0, 0, 0);
+
+                } else if($matches_count == 3) {
+
+                    return Carbon::create($year, $matches[2], 1, 0, 0, 0);
+
+                } else if($matches_count == 2) {
+
+                    return Carbon::create($year, 1, 1, 0, 0, 0);
+
+                }
+
+            }
+
+        }
+
+        return false;
+
+    }
+
     // Gender
 
     private $_genders = [
@@ -402,29 +473,29 @@ class Wafu {
 
     }
 
-    public function CommonEraYear($japanese_era_year) {
+    public function commonEraYear($japanese_era_year) {
 
         $year = -1;
         $japanese_era_year = mb_convert_kana($japanese_era_year, 'n');
 
-        if(preg_match('!(明治|大正|昭和|平成)([0-9]{1,2}|元)年!', $japanese_era_year, $matches)) {
+        if(preg_match('!(明治|大正|昭和|平成|M|T|S|H)([0-9]{1,2}|元)[年]?!', $japanese_era_year, $matches)) {
 
             $era_name = $matches[1];
             $era_year = ($matches[2] == '元') ? 1 : $matches[2];
 
-            if($era_name == '平成') {
+            if($era_name == '平成' || $era_name == 'H') {
 
                 $year = $era_year + 1988;
 
-            } else if($era_name == '昭和') {
+            } else if($era_name == '昭和' || $era_name == 'S') {
 
                 $year = $era_year + 1925;
 
-            } else if($era_name == '大正') {
+            } else if($era_name == '大正' || $era_name == 'T') {
 
                 $year = $era_year + 1911;
 
-            } else if($era_name == '明治') {
+            } else if($era_name == '明治' || $era_name == 'M') {
 
                 $year = $era_year + 1867;
 
