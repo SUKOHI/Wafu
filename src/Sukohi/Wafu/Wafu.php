@@ -6,7 +6,7 @@ class Wafu {
 
     // Week Name
 
-    private $_week_name = [
+    private $_week_names = [
         '0' => '日',
         '1' => '月',
         '2' => '火',
@@ -16,9 +16,24 @@ class Wafu {
         '6' => '土'
     ];
 
-    public function weekNames() {
+    private $_month_names = [
+        '1' => '1月',
+        '2' => '2月',
+        '3' => '3月',
+        '4' => '4月',
+        '5' => '5月',
+        '6' => '6月',
+        '7' => '7月',
+        '8' => '8月',
+        '9' => '9月',
+        '10' => '10月',
+        '11' => '11月',
+        '12' => '12月'
+    ];
 
-        return $this->_week_name;
+    public function weekNames($key_flag = true) {
+
+        return ($key_flag) ? $this->_week_names : array_values($this->_week_names);
 
     }
 
@@ -30,13 +45,7 @@ class Wafu {
 
         }
 
-        if($this->_week_name[$week_no]) {
-
-            return $this->_week_name[$week_no];
-
-        }
-
-        return '';
+        return array_get($this->_week_names, $week_no, '');
 
     }
 
@@ -44,6 +53,31 @@ class Wafu {
 
         $week_name = $this->weekName($week_no);
         return !empty($week_name);
+
+    }
+    
+    public function monthNames($key_flag = true) {
+
+        return ($key_flag) ? $this->_month_names : array_values($this->_month_names);
+        
+    }
+    
+    public function monthName($month_no) {
+
+        if(is_object($month_no) && get_class($month_no) == 'Carbon\Carbon') {
+
+            $month_no = $month_no->month;
+
+        }
+
+        return array_get($this->_month_names, $month_no, '');
+        
+    }
+
+    public function hasMonthName($month_no) {
+
+        $month_name = $this->monthName($month_no);
+        return !empty($month_name);
 
     }
 

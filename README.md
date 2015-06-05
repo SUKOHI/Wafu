@@ -36,11 +36,22 @@ Usage
 
     if(Wafu::hasWeekName(2)) {
 
-        echo Wafu::weekName(2);    // Between 0 and 6
-        echo Wafu::weekName(Carbon::now());    // or using Carbon
-        var_dump(Wafu::weekNames());
+        echo Wafu::weekName(2);                 // Between 0 and 6
+        echo Wafu::weekName(Carbon::now());     // or using Carbon
+        var_dump(Wafu::weekNames($key_flag = true));   // $key_flag means whether you need array keys or not
 
     }
+
+**Month Name**
+
+    if(Wafu::hasMonthName(2)) {
+
+        echo Wafu::monthName(2);                // Between 1 and 12
+        echo Wafu::monthName(Carbon::now());    // Using Carbon
+        var_dump(Wafu::monthNames($key_flag = true));   // $key_flag means whether you need array keys or not
+
+    }
+
 
 **Date**
 
