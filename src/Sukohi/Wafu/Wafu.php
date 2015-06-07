@@ -55,7 +55,34 @@ class Wafu {
         return !empty($week_name);
 
     }
-    
+
+    public function longWeekNames($key_flag = true) {
+
+        $week_names = $this->weekNames();
+
+        foreach ($week_names as $index => $week_name) {
+
+            $week_names[$index] = $week_name .'曜日';
+
+        }
+
+        return ($key_flag) ? $week_names : array_values($week_names);
+
+    }
+
+    public function longWeekName($week_no) {
+
+        if(is_object($week_no) && get_class($week_no) == 'Carbon\Carbon') {
+
+            $week_no = $week_no->dayOfWeek;
+
+        }
+
+        return array_get($this->longWeekNames(), $week_no, '');
+
+    }
+
+
     public function monthNames($key_flag = true) {
 
         return ($key_flag) ? $this->_month_names : array_values($this->_month_names);

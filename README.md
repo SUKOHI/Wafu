@@ -42,6 +42,13 @@ Usage
 
     }
 
+**Week Name(Long)**
+
+    echo Wafu::longWeekName(2);                 // Between 0 and 6
+    echo Wafu::longWeekName(Carbon::now());     // or using Carbon
+    var_dump(Wafu::longWeekNames($key_flag = true));   // $key_flag means whether you need array keys or not
+
+
 **Month Name**
 
     if(Wafu::hasMonthName(2)) {
