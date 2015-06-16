@@ -185,7 +185,17 @@ Usage
     
     *Note: $cache_flag means that you'd like to use cache or not. And the default value is true;
 
-        
+
+**Yen Format**
+
+    echo Wafu::yenFormat(1500);                               // 1,500円
+    echo Wafu::yenFormat(1500, YEN_NO_COMMA);                 // 1500円
+    echo Wafu::yenFormat(1500, YEN_SYMBOL);                   // ￥1,500
+    echo Wafu::yenFormat(1500, YEN_SYMBOL_NO_COMMA);          // ￥1500
+    echo Wafu::yenFormat(1500, YEN_SYMBOL_COMMA_HYPHEN);      // ￥1,500-
+    echo Wafu::yenFormat(1500, YEN_SYMBOL_NO_COMMA_HYPHEN);   // ￥1500-
+
+
 License
 ====
 

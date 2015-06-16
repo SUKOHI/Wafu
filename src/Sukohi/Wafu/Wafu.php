@@ -4,6 +4,17 @@ use Carbon\Carbon;
 
 class Wafu {
 
+    public function __construct() {
+
+        define('YEN_COMMA', 0);
+        define('YEN_NO_COMMA', 1);
+        define('YEN_SYMBOL', 2);
+        define('YEN_SYMBOL_NO_COMMA', 3);
+        define('YEN_SYMBOL_COMMA_HYPHEN', 4);
+        define('YEN_SYMBOL_NO_COMMA_HYPHEN', 5);
+
+    }
+
     // Week Name
 
     private $_week_names = [
@@ -601,6 +612,46 @@ class Wafu {
             return $national_days;
 
         });
+
+    }
+
+    // Yen Format
+
+    const YEN_COMMA = 0;
+    const YEN_NO_COMMA = 1;
+    const YEN_SYMBOL = 2;
+    const YEN_SYMBOL_NO_COMMA = 3;
+    const YEN_SYMBOL_COMMA_HYPHEN = 4;
+    const YEN_SYMBOL_NO_COMMA_HYPHEN = 5;
+
+    public function yenFormat($number, $mode_id = 0) {
+
+        $yen = '';
+
+        switch($mode_id) {
+
+            case 0:
+                $yen = number_format($number) .'円';
+                break;
+            case 1:
+                $yen = $number .'円';
+                break;
+            case 2:
+                $yen = '￥'. number_format($number);
+                break;
+            case 3:
+                $yen = '￥'. $number;
+                break;
+            case 4:
+                $yen = '￥'. number_format($number) .'-';
+                break;
+            case 5:
+                $yen = '￥'. $number .'-';
+                break;
+
+        }
+
+        return $yen;
 
     }
 
