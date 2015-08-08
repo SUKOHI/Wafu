@@ -1,23 +1,34 @@
 Wafu
 ===================
-PHP class that mainly developed for Laravel to provide Japanese data like week name, gender and so on.
+PHP class that mainly developed for Laravel to provide Japanese data like week name, gender and so on.  
+(This is for Laravel 4.2. [For Laravel 5+](https://github.com/SUKOHI/Wafu))
 
-Installation&setting for Laravel
+Installation
 ====
 
-After installation using composer, add the followings to the array in  app/config/app.php
+Add this package name in composer.json
 
-    'providers' => array(  
+    "require": {
+      "sukohi/Wafu": "1.*"
+    }
+
+Execute composer command.
+
+    composer update
+
+Register the service provider in app.php
+
+    'providers' => [
         ...Others...,  
         'Sukohi\Wafu\WafuServiceProvider',
-    )
+    ]
 
-Also
+Also alias
 
-    'aliases' => array(  
+    'aliases' => [
         ...Others...,  
         'Wafu' => 'Sukohi\Wafu\Facades\Wafu',
-    )
+    ]
 
 Usage
 ====
