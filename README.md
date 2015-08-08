@@ -1,6 +1,7 @@
 Wafu
 ===================
-PHP class that mainly developed for Laravel to provide Japan-Related data like week name, gender and so on.
+PHP class that mainly developed for Laravel to provide Japan-Related data like week name, gender and so on.  
+(This is for Laravel 5+. [For Laravel 4.2](https://github.com/SUKOHI/Wafu/tree/1.0))
 
 Installation
 ====
