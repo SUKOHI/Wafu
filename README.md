@@ -9,7 +9,7 @@ Installation
 Add this package name in composer.json
 
     "require": {
-      "sukohi/Wafu": "1.*"
+      "sukohi/wafu": "1.*"
     }
 
 Execute composer command.
