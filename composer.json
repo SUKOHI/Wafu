@@ -1,6 +1,6 @@
 {
     "name": "sukohi/wafu",
-    "description": "",
+    "description": "PHP class that mainly developed for Laravel to provide Japan-Related data like week name, gender and so on.",
     "authors": [
         {
             "name": "Sukohi",
