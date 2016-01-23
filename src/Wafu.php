@@ -545,34 +545,15 @@ class Wafu {
 
     }
 
-    public function nationalDays($start_date = '', $end_date = '', $cache_flag = true) {
+    public function nationalDays($cache_flag = true) {
 
-        $date_correct = function($date) {
+        if(func_num_args() == 3) {
 
-            if(gettype($date) =='object' && get_class($date) == 'Carbon\Carbon') {
-
-                return $date->format('Y-m-d');
-
-            }
-            return $date;
-
-        };
-
-        if(empty($start_date)) {
-
-            $start_date = date('Y-01-01');
+            $cache_flag = func_get_arg(2);
 
         }
 
-        if(empty($end_date)) {
-
-            $end_date = date('Y-12-31');
-
-        }
-
-        $start_date = $date_correct($start_date);
-        $end_date = $date_correct($end_date);
-        $cache_key = 'japanese_national_days_'. $start_date .'_'. $end_date;
+        $cache_key = 'japanese_national_days_'. date('Y');
 
         if(!$cache_flag && \Cache::has($cache_key)) {
 
@@ -580,35 +561,46 @@ class Wafu {
 
         }
 
-        return \Cache::rememberForever($cache_key, function() use($start_date, $end_date) {
+        return \Cache::rememberForever($cache_key, function() {
 
+            $html = file_get_contents('https://calendar.google.com/calendar/ical/'. urlencode('japanese__ja@holiday.calendar.google.com') .'/public/full.ics');
+            $lines = explode("\n", $html);
             $national_days = [];
-            $url = 'https://www.google.com/calendar/feeds/'. urlencode('japanese__ja@holiday.calendar.google.com') .'/public/basic'.
-                '?start-min='. date($start_date .'\T00:00:00\Z') .
-                '&start-max='. date($end_date .'\T00:00:00\Z') .'&max-results=100&alt=json';
+            $date = $day_name = '';
 
-            if($json = file_get_contents($url)) {
+            foreach ($lines as $index => $line) {
 
-                $json_data = json_decode($json, true);
+                if(preg_match('#^([\w-]+);?(.*?):(.*)$#i', $line, $matches)) {
 
-                if(!empty($json_data['feed']['entry'])) {
+                    $key = trim($matches[1]);
+                    $value = trim($matches[3]);
 
-                    foreach ($json_data['feed']['entry'] as $value) {
+                    if($key == 'DTSTART') {
 
-                        $title = $value['title']['$t'];
-                        $date = preg_replace('#\A.*?(2\d{7})[^/]*\z#i', '$1', $value['id']['$t']);
-                        $date2 = preg_replace('/\A(\d{4})(\d{2})(\d{2})/', '$1-$2-$3', $date);
-                        $national_days[$date2] = $title;
+                        $date = $value;
+
+                    } else if($key == 'SUMMARY') {
+
+                        $day_name = $value;
+
+                    } else if($key == 'END' && $value == 'VEVENT') {
+
+                        if(!empty($date) && !empty($day_name)) {
+
+                            $dt = Carbon::parse($date);
+                            $national_days[$dt->format('Y-m-d')] = $day_name;
+
+                        }
+
+                        $date = $day_name = '';
 
                     }
-
-                    ksort($national_days);
-                    return $national_days;
 
                 }
 
             }
 
+            ksort($national_days);
             return $national_days;
 
         });
