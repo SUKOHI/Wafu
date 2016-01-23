@@ -176,26 +176,18 @@ Usage
     // Simple Way
 
     $national_days = Wafu::nationalDays();
-    var_dump($national_days);   // National days of this year
+    var_dump($national_days);   // National days
     
     
-    // with a Specific Range
-
-    $start_date = '2015-01-01';
-    $end_date = '2015-12-31';
-    $national_days = Wafu::nationalDays($start_date, $end_date);
-    var_dump($national_days);
-
-
-    // with a Specific Range(Using Carbon)
-
-    $start_date = Carbon::today();
-    $end_date = $start_date->copy()->addYear();
-    $national_days = Wafu::nationalDays($start_date, $end_date, $cache_flag = true);
-    var_dump($national_days);
+    // with Cache
     
-    *Note: $cache_flag means that you'd like to use cache or not. And the default value is true;
+    $national_days = Wafu::nationalDays($cache_flag = true));
+    
+* Note:  
+    You can no longer use `$start_date` and `$end_date` parameters like the below because Google finished to provide holidays data through a feed.  
+    But you DO NOT need to change your code that you've already written because nationalDays() method can detect whether your code is old version or not.
 
+    Wafu::nationalDays($start_date, $end_date, $cache_flag = true);
 
 **Yen Format**
 

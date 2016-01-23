@@ -18,7 +18,7 @@ class WafuServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('sukohi/wafu');
+		$this->package('whoops-report/wafu');
 	}
 
 	/**
