@@ -53,6 +53,7 @@ Usage
 
     }
 
+
 **Week Name(Long)**
 
     echo Wafu::longWeekName(2);                 // Between 0 and 6
@@ -81,6 +82,7 @@ Usage
     echo Wafu::date('{Y}');    // 2015年
     echo Wafu::date('{y}');    // 15年
     echo Wafu::date('{E}');    // 平成27年
+    echo Wafu::date('{e}');    // H27
     echo Wafu::date('{m}');    // 01月
     echo Wafu::date('{n}');    // 1月
     echo Wafu::date('{d}');    // 01日
@@ -129,12 +131,14 @@ Usage
 
     /*  Output
 
-        array(3) {
+        array(4) {
           ["era_name"]=>
           string(6) "昭和"
+          ["era_initial"]=>
+          string(1) "S"
           ["era_year"]=>
           int(52)
-          ["era_full_year"]=>
+          ["era_full"]=>
           string(11) "昭和52年"
         }
 
