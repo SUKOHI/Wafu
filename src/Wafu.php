@@ -129,7 +129,7 @@ class Wafu {
 
         }
 
-        $format = preg_replace_callback('|\{([YymndjGgHhiswaEFf])\}|', function($matches) use($time) {
+        $format = preg_replace_callback('|\{([YymndjGgHhiswaEeFf])\}|', function($matches) use($time) {
 
             $text = '';
             $symbol = $matches[1];
@@ -181,6 +181,10 @@ class Wafu {
                 case 'E':
                     $text = $this->japaneseEraYear($time->year);
                     break;
+				case 'e':
+					$japanese_era = $this->japaneseEra($time->year);
+					$text = '\\'. $japanese_era['era_initial'] . $japanese_era['era_year'];
+					break;
                 case 'F':
                     $text = 'Y年m月d日（'. $this->weekName($time->dayOfWeek) .'） H時i分';
                     break;
@@ -469,39 +473,44 @@ class Wafu {
 
     public function japaneseEra($year) {
 
-        $era_name = '';
-        $era_year = 0;
+		$era_name = $era_initial = '';
+		$era_year = 0;
 
-        if ($year >= 1989) {
+		if ($year >= 1989) {
 
-            $era_name = '平成';
-            $era_year = $year - 1988;
+			$era_name = '平成';
+			$era_initial = 'H';
+			$era_year = $year - 1988;
 
-        } elseif ($year >= 1926) {
+		} elseif ($year >= 1926) {
 
-            $era_name = '昭和';
-            $era_year = $year - 1925;
+			$era_name = '昭和';
+			$era_initial = 'S';
+			$era_year = $year - 1925;
 
-        } elseif ($year >= 1912) {
+		} elseif ($year >= 1912) {
 
-            $era_name = '大正';
-            $era_year = $year - 1911;
+			$era_name = '大正';
+			$era_initial = 'T';
+			$era_year = $year - 1911;
 
-        } else {
+		} else {
 
-            $era_name = '明治';
-            $era_year = $year - 1867;
+			$era_name = '明治';
+			$era_initial = 'M';
+			$era_year = $year - 1867;
 
-        }
+		}
 
-        $era_year_corrected = ($era_year == 1) ? '元' : $era_year;
+		$era_year_corrected = ($era_year == 1) ? '元' : $era_year;
 
-        return [
-            'era_name' => $era_name,
-            'era_year' => $era_year,
-            'era_full' => $era_name . $era_year_corrected .'年'
-        ];
-
+		return [
+			'era_name' => $era_name,
+			'era_initial' => $era_initial,
+			'era_year' => $era_year,
+			'era_full' => $era_name . $era_year_corrected .'年'
+		];
+		
     }
 
     public function japaneseEraYear($year) {
