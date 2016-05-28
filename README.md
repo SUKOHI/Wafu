@@ -81,6 +81,7 @@ Usage
     echo \Wafu::date('{Y}');    // 2015年
     echo \Wafu::date('{y}');    // 15年
     echo \Wafu::date('{E}');    // 平成27年
+    echo \Wafu::date('{e}');    // H27
     echo \Wafu::date('{m}');    // 01月
     echo \Wafu::date('{n}');    // 1月
     echo \Wafu::date('{d}');    // 01日
