@@ -130,12 +130,14 @@ Usage
 
     /*  Output
 
-        array(3) {
+        array(4) {
           ["era_name"]=>
           string(6) "昭和"
+          ["era_initial"]=>
+          string(1) "S"
           ["era_year"]=>
           int(52)
-          ["era_full_year"]=>
+          ["era_full"]=>
           string(11) "昭和52年"
         }
 
