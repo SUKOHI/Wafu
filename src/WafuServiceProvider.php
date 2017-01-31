@@ -29,9 +29,10 @@ class WafuServiceProvider extends ServiceProvider {
 
     public function register()
     {
-        $this->app['wafu'] = $this->app->share(function($app)
-        {
+        $this->app->singleton('wafu', function(){
+
             return new Wafu;
+
         });
     }
 
