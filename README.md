@@ -155,7 +155,19 @@ Usage
     echo \Wafu::commonEraYear('M元年');   // 1868
     echo \Wafu::commonEraYear('S52');    // 1977
     echo \Wafu::commonEraYear('M1');   // 1868
+    
+    $era_years = \Wafu::japaneseEraYears();
+    
+    /*  Output
+    
+        array:4 [▼
+          "meiji" => "明治"
+          "taisho" => "大正"
+          "showa" => "昭和"
+          "heisei" => "平成"
+        ]
         
+    */
 
 **Convert Japanese Date to Datetime (Carbon)**
         

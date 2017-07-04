@@ -520,6 +520,17 @@ class Wafu {
 
     }
 
+    public function japaneseEraYears() {
+
+        return [
+            'meiji' => '明治',
+            'taisho' => '大正',
+            'showa' => '昭和',
+            'heisei' => '平成'
+        ];
+
+    }
+
     public function commonEraYear($japanese_era_year) {
 
         $year = -1;
