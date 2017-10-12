@@ -273,6 +273,30 @@ class Wafu {
 
     }
 
+    // Convert Era date
+    public function convertJapaneseEraDate($era_symbol, $era_year, $month, $day) {
+
+        $era_name = $this->japaneseEraName($era_symbol);
+
+        if(empty($era_name) || empty($era_year) || empty($month) || empty($day)) {
+
+            return null;
+
+        }
+
+        $dt = null;
+        $year = $this->commonEraYear($era_name . $era_year .'年');
+
+        try {
+
+            $dt = Carbon::create($year, $month, $day, 0, 0, 0);
+
+        } catch (\Exception $e) {}
+
+        return $dt;
+
+    }
+
     // Gender
 
     private $_genders = [
@@ -471,42 +495,60 @@ class Wafu {
 
     }
 
+    private $_japanese_era_data = [
+        [
+            'name' => '明治',
+            'initial' => 'M',
+            'symbol' => 'meiji',
+            'start_year' => 1868
+        ],
+        [
+            'name' => '大正',
+            'initial' => 'T',
+            'symbol' => 'taisho',
+            'start_year' => 1912
+        ],
+        [
+            'name' => '昭和',
+            'initial' => 'S',
+            'symbol' => 'showa',
+            'start_year' => 1926
+        ],
+        [
+            'name' => '平成',
+            'initial' => 'H',
+            'symbol' => 'heisei',
+            'start_year' => 1989
+        ]
+    ];
+
     public function japaneseEra($year) {
 
 		$era_name = $era_initial = $era_symbol = '';
 		$era_year = 0;
+		$has_era = false;
 
-		if ($year >= 1989) {
+        foreach ($this->_japanese_era_data as $japanese_era) {
 
-			$era_name = '平成';
-			$era_initial = 'H';
-            $era_symbol = 'heisei';
-			$era_year = $year - 1988;
+            if ($year >= $japanese_era['start_year']) {
 
-		} elseif ($year >= 1926) {
+                $era_name = $japanese_era['name'];
+                $era_initial = $japanese_era['initial'];
+                $era_symbol = $japanese_era['symbol'];
+                $era_year = $year - $japanese_era['start_year'] + 1;
+                $has_era = true;
 
-			$era_name = '昭和';
-			$era_initial = 'S';
-            $era_symbol = 'showa';
-			$era_year = $year - 1925;
+            }
 
-		} elseif ($year >= 1912) {
-
-			$era_name = '大正';
-			$era_initial = 'T';
-            $era_symbol = 'taisho';
-			$era_year = $year - 1911;
-
-		} else {
-
-			$era_name = '明治';
-			$era_initial = 'M';
-            $era_symbol = 'meiji';
-			$era_year = $year - 1867;
-
-		}
+        }
 
 		$era_year_corrected = ($era_year == 1) ? '元' : $era_year;
+
+        if(!$has_era) {
+
+            return null;
+
+        }
 
 		return [
 			'era_name' => $era_name,
@@ -527,12 +569,64 @@ class Wafu {
 
     public function japaneseEraYears() {
 
-        return [
-            'meiji' => '明治',
-            'taisho' => '大正',
-            'showa' => '昭和',
-            'heisei' => '平成'
-        ];
+        return $this->japaneseEraNames();
+
+    }
+
+    public function japaneseEraNames($key = 'symbol') {
+
+        $names = [];
+
+        foreach ($this->_japanese_era_data as $japanese_era) {
+
+            $name_key = ($key == 'initial') ? $japanese_era['initial'] : $japanese_era['symbol'];
+            $names[$name_key] = $japanese_era['name'];
+
+        }
+        
+        return $names;
+
+    }
+
+    public function japaneseEraInitials() {
+
+        $initials = [];
+
+        foreach ($this->_japanese_era_data as $japanese_era) {
+
+            $initials[] = $japanese_era['initial'];
+
+        }
+
+        return $initials;
+
+    }
+
+    public function japaneseEraSymbols() {
+
+        return array_keys($this->japaneseEraNames());
+
+    }
+
+    public function japaneseEraName($symbol) {
+
+        $name = null;
+
+        foreach ($this->_japanese_era_data as $japanese_era) {
+
+            $target_symbol = $japanese_era['symbol'];
+            $target_initial = $japanese_era['initial'];
+
+            if(in_array($symbol, [$target_symbol, $target_initial])) {
+
+                $name = $japanese_era['name'];
+                break;
+
+            }
+
+        }
+
+        return $name;
 
     }
 
