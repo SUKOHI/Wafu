@@ -473,31 +473,35 @@ class Wafu {
 
     public function japaneseEra($year) {
 
-		$era_name = $era_initial = '';
+		$era_name = $era_initial = $era_symbol = '';
 		$era_year = 0;
 
 		if ($year >= 1989) {
 
 			$era_name = '平成';
 			$era_initial = 'H';
+            $era_symbol = 'heisei';
 			$era_year = $year - 1988;
 
 		} elseif ($year >= 1926) {
 
 			$era_name = '昭和';
 			$era_initial = 'S';
+            $era_symbol = 'showa';
 			$era_year = $year - 1925;
 
 		} elseif ($year >= 1912) {
 
 			$era_name = '大正';
 			$era_initial = 'T';
+            $era_symbol = 'taisho';
 			$era_year = $year - 1911;
 
 		} else {
 
 			$era_name = '明治';
 			$era_initial = 'M';
+            $era_symbol = 'meiji';
 			$era_year = $year - 1867;
 
 		}
@@ -507,6 +511,7 @@ class Wafu {
 		return [
 			'era_name' => $era_name,
 			'era_initial' => $era_initial,
+            'era_symbol' => $era_symbol,
 			'era_year' => $era_year,
 			'era_full' => $era_name . $era_year_corrected .'年'
 		];

@@ -8,15 +8,9 @@ PHP class that mainly developed for Laravel to provide Japan-Related data like w
 Installation
 ====
 
-Add this package name in composer.json
-
-    "require": {
-      "sukohi/wafu": "2.*"
-    }
-
 Execute composer command.
 
-    composer update
+    composer require sukohi/wafu:2.*
 
 Register the service provider in app.php
 
@@ -31,6 +25,8 @@ Also alias
         ...Others...,  
         'Wafu'   => Sukohi\Wafu\Facades\Wafu::class
     ]
+
+Note: If you are in L55+, you do NOT need the above because of auto-discovery.
 
 Usage
 ====
@@ -128,20 +124,18 @@ Usage
 
 **Japanese Era**
 
-    var_dump(\Wafu::japaneseEra(1977));
+    print_r(\Wafu::japaneseEra(1977));
 
     /*  Output
 
-        array(4) {
-          ["era_name"]=>
-          string(6) "昭和"
-          ["era_initial"]=>
-          string(1) "S"
-          ["era_year"]=>
-          int(52)
-          ["era_full"]=>
-          string(11) "昭和52年"
-        }
+    Array
+    (
+        [era_name] => 昭和
+        [era_initial] => S
+        [era_symbol] => showa
+        [era_year] => 52
+        [era_full] => 昭和52年
+    )
 
      */
 

@@ -16,5 +16,15 @@
             "Sukohi\\Wafu\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sukohi\\Wafu\\WafuServiceProvider"
+            ],
+            "aliases": {
+                "Wafu": "Sukohi\\Wafu\\Facades\\Wafu"
+            }
+        }
+    }
 }
