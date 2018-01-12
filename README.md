@@ -10,7 +10,7 @@ Installation
 
 Execute composer command.
 
-    composer require sukohi/wafu:3.*
+    composer require sukohi/wafu:2.*
 
 Register the service provider in app.php
 
@@ -124,11 +124,9 @@ Usage
 
 **Japanese Era**
 
-    /* Era from Common Year */
+    print_r(\Wafu::japaneseEra(1977));
 
-    $era = \Wafu::japaneseEra(1977);
-
-    /* Output
+    /*  Output
 
     Array
     (
@@ -139,18 +137,12 @@ Usage
         [era_full] => 昭和52年
     )
 
-    Or `null` if year is wrong.
+     */
 
-    */
-
-
-    /* Era Year from Common Year */
-    
     echo \Wafu::japaneseEraYear(1989);   // 平成元年
 
+    // Get Common Era from Japanese Era
 
-    /* Common Year from Era Year */
-    
     echo \Wafu::commonEraYear('昭和52年');  // 1977
     echo \Wafu::commonEraYear('明治元年');   // 1868
     echo \Wafu::commonEraYear('S52年');  // 1977
@@ -158,88 +150,18 @@ Usage
     echo \Wafu::commonEraYear('S52');    // 1977
     echo \Wafu::commonEraYear('M1');   // 1868
     
-    
-    /* Era names(with Symbol) */
-    
-    $era_names = \Wafu::japaneseEraNames();
-    $era_names = \Wafu::japaneseEraNames('symbol'); // Same with the aboeve.
+    $era_years = \Wafu::japaneseEraYears();
     
     /*  Output
     
-    Array
-    (
-        [meiji] => 明治
-        [taisho] => 大正
-        [showa] => 昭和
-        [heisei] => 平成
-    )
-        
-    */    
-    
-    /* Era names(with Initial) */
-    
-    $era_names = \Wafu::japaneseEraNames('initial');
-    
-    /*  Output
-    
-    Array
-    (
-        [M] => 明治
-        [T] => 大正
-        [S] => 昭和
-        [H] => 平成
-    )
+        array:4 [▼
+          "meiji" => "明治"
+          "taisho" => "大正"
+          "showa" => "昭和"
+          "heisei" => "平成"
+        ]
         
     */
-    
-    
-    /* Era Symbols */
-    
-    $symbols = \Wafu::japaneseEraSymbols();
-    
-    /* Output
-    
-    Array
-    (
-        [0] => meiji
-        [1] => taisho
-        [2] => showa
-        [3] => heisei
-    )
-    
-    */
-    
-    
-    /* Era Initials */
-    
-    $initials = \Wafu::japaneseEraInitials();
-    
-    /* Output
-    
-    Array
-    (
-        [0] => M
-        [1] => T
-        [2] => S
-        [3] => H
-    )
-    
-    */
-    
-    /* Era name from symbol or initial */
-    
-    echo \Wafu::japaneseEraName('showa');   // 昭和　or `null` if not found.
-    echo \Wafu::japaneseEraName('M');       // 明治
-
-
-    /* Date Time from Era Date */
-    
-    $era_symbol = 'showa';  // or `S`
-    $era_year = 52;
-    $month = 7;
-    $day = 22;
-    $dt = \Wafu::convertJapaneseEraDate($era_symbol, $era_year, $month, $day);
-    echo $dt;   // 1977-07-22 00:00:00  // Or `null` if the date is wrong. 
 
 **Convert Japanese Date to Datetime (Carbon)**
         
