@@ -42,6 +42,21 @@ class Wafu {
         '12' => '12月'
     ];
 
+    private $_old_month_names = [
+        '1' => '睦月',
+        '2' => '如月',
+        '3' => '弥生',
+        '4' => '卯月',
+        '5' => '皐月',
+        '6' => '水無月',
+        '7' => '文月',
+        '8' => '葉月',
+        '9' => '長月',
+        '10' => '神無月',
+        '11' => '霜月',
+        '12' => '師走'
+    ];
+
     public function weekNames($key_flag = true) {
 
         return ($key_flag) ? $this->_week_names : array_values($this->_week_names);
@@ -115,6 +130,32 @@ class Wafu {
     public function hasMonthName($month_no) {
 
         $month_name = $this->monthName($month_no);
+        return !empty($month_name);
+
+    }
+
+
+    public function oldMonthNames($key_flag = true) {
+
+        return ($key_flag) ? $this->_old_month_names : array_values($this->_old_month_names);
+
+    }
+
+    public function oldMonthName($month_no) {
+
+        if(is_object($month_no) && get_class($month_no) == 'Carbon\Carbon') {
+
+            $month_no = $month_no->month;
+
+        }
+
+        return array_get($this->_old_month_names, $month_no, '');
+
+    }
+
+    public function hasOldMonthName($month_no) {
+
+        $month_name = $this->oldMonthName($month_no);
         return !empty($month_name);
 
     }
@@ -641,6 +682,12 @@ class Wafu {
     const YEN_SYMBOL_COMMA_HYPHEN = 4;
     const YEN_SYMBOL_NO_COMMA_HYPHEN = 5;
 
+    public function yen($number, $mode_id = 0) {
+
+        return $this->yenFormat($number, $mode_id);
+
+    }
+
     public function yenFormat($number, $mode_id = 0) {
 
         $yen = '';
@@ -669,6 +716,38 @@ class Wafu {
         }
 
         return $yen;
+
+    }
+
+    public function consumptionTax($dt, $amount, $total_flag = false) {
+
+        if($dt < Carbon::create(1989, 4, 1, 0, 0, 0)) {
+
+            $percentage = 0;
+
+        } else if($dt < Carbon::create(1997, 4, 1, 0, 0, 0)) {
+
+            $percentage = 0.03;
+
+        } else if($dt < Carbon::create(2014, 4, 1, 0, 0, 0)) {
+
+            $percentage = 0.05;
+
+        } else {
+
+            $percentage = 0.08;
+
+        }
+
+        $tax = floor($amount * $percentage);
+
+        if($total_flag) {
+
+            return $amount + $tax;
+
+        }
+
+        return $tax;
 
     }
 
