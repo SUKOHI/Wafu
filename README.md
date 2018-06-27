@@ -31,7 +31,7 @@ Note: If you are in L55+, you do NOT need the above because of auto-discovery.
 Usage
 ====
 
-**Gender**
+**Gender（性別）**
 
     if(\Wafu::hasGender(1)) {
 
@@ -40,8 +40,9 @@ Usage
 
     }
 
+1: 男性, 2: 女性, 0: その他
 
-**Week Name**
+**Week Name（曜日）**
 
     if(\Wafu::hasWeekName(2)) {
 
@@ -50,15 +51,18 @@ Usage
         var_dump(\Wafu::weekNames($key_flag = true));   // $key_flag means whether you need array keys or not
 
     }
+    
+0: 日, 1: 月, 2: 火, 3: 水, 4: 木, 5: 金, 6: 土
 
-**Week Name(Long)**
+**Week Name(Long)（長い月名）**
 
     echo \Wafu::longWeekName(2);                 // Between 0 and 6
     echo \Wafu::longWeekName(Carbon::now());     // or using Carbon
     var_dump(\Wafu::longWeekNames($key_flag = true));   // $key_flag means whether you need array keys or not
 
+0: 日曜日, 1: 月曜日, 2: 火曜日, 3: 水曜日, 4: 木曜日, 5: 金曜日, 6: 土曜日
 
-**Month Name**
+**Month Name（月名）**
 
     if(\Wafu::hasMonthName(2)) {
 
@@ -67,9 +71,11 @@ Usage
         var_dump(\Wafu::monthNames($key_flag = true));   // $key_flag means whether you need array keys or not
 
     }
+    
+1月 〜 12月
 
 
-**Date**
+**Date（日付）**
 
     echo \Wafu::date($format, $time);
     
@@ -100,7 +106,7 @@ Usage
     
     echo \Wafu::date('{Y}{m}{d} H:i');    // 2015年05月23日（土） 20:11
 
-**Prefecture**
+**Prefecture（都道府県）**
 
     if(\Wafu::hasPrefecture(28)) {
 
@@ -110,8 +116,55 @@ Usage
 
     }
 
+1: 北海道,
+2: 青森県,
+3: 岩手県,
+4: 宮城県,
+5: 秋田県,
+6: 山形県,
+7: 福島県,
+8: 茨城県,
+9: 栃木県,
+10: 群馬県,
+11: 埼玉県,
+12: 千葉県,
+13: 東京都,
+14: 神奈川県,
+15: 新潟県,
+16: 富山県,
+17: 石川県,
+18: 福井県,
+19: 山梨県,
+20: 長野県,
+21: 岐阜県,
+22: 静岡県,
+23: 愛知県,
+24: 三重県,
+25: 滋賀県,
+26: 京都府,
+27: 大阪府,
+28: 兵庫県,
+29: 奈良県,
+30: 和歌山県,
+31: 鳥取県,
+32: 島根県,
+33: 岡山県,
+34: 広島県,
+35: 山口県,
+36: 徳島県,
+37: 香川県,
+38: 愛媛県,
+39: 高知県,
+40: 福岡県,
+41: 佐賀県,
+42: 長崎県,
+43: 熊本県,
+44: 大分県,
+45: 宮崎県,
+46: 鹿児島県,
+47: 沖縄県
 
-**Region**
+**Region（地方）**
 
     if(\Wafu::hasRegion(3)) {
 
@@ -121,8 +174,17 @@ Usage
         var_dump(\Wafu::regionPrefectureIds());  // Prefecture IDs by regions
 
     }
+    
+1: 北海道,
+2: 東北,
+3: 関東,
+4: 中部,
+5: 関西,
+6: 中国,
+7: 四国,
+8: 九州
 
-**Japanese Era**
+**Japanese Era（和暦）**
 
     print_r(\Wafu::japaneseEra(1977));
 
@@ -163,7 +225,7 @@ Usage
         
     */
 
-**Convert Japanese Date to Datetime (Carbon)**
+**Convert Japanese Date to Datetime（和暦から西暦へ変換）**
         
     $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時11分29秒');
     $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時11分');
@@ -182,7 +244,7 @@ Usage
     $dt = \Wafu::convertJapaneseDate('H27');
     
     
-**National Days**
+**National Days（祝日・休日）**
 
     // Simple Way
 
@@ -201,7 +263,7 @@ Usage
     Wafu::nationalDays($start_date, $end_date, $cache_flag = true);
 
 
-**Yen Format**
+**Yen Format（円表記）**
 
     echo \Wafu::yenFormat(1500);                               // 1,500円
     echo \Wafu::yenFormat(1500, YEN_NO_COMMA);                 // 1500円
@@ -211,7 +273,7 @@ Usage
     echo \Wafu::yenFormat(1500, YEN_SYMBOL_NO_COMMA_HYPHEN);   // ￥1500-
 
 
-**Consumption Tax**
+**Consumption Tax（消費税）**
 
     $dt = new Carbon('2000-01-01');
     $amount = 1000;
