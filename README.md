@@ -288,12 +288,12 @@ Usage
 
 **Yen Format（円表記）**
 
-    echo \Wafu::yenFormat(1500);                               // 1,500円
-    echo \Wafu::yenFormat(1500, YEN_NO_COMMA);                 // 1500円
-    echo \Wafu::yenFormat(1500, YEN_SYMBOL);                   // ￥1,500
-    echo \Wafu::yenFormat(1500, YEN_SYMBOL_NO_COMMA);          // ￥1500
-    echo \Wafu::yenFormat(1500, YEN_SYMBOL_COMMA_HYPHEN);      // ￥1,500-
-    echo \Wafu::yenFormat(1500, YEN_SYMBOL_NO_COMMA_HYPHEN);   // ￥1500-
+    echo \Wafu::yen(1500);                               // 1,500円
+    echo \Wafu::yen(1500, YEN_NO_COMMA);                 // 1500円
+    echo \Wafu::yen(1500, YEN_SYMBOL);                   // ￥1,500
+    echo \Wafu::yen(1500, YEN_SYMBOL_NO_COMMA);          // ￥1500
+    echo \Wafu::yen(1500, YEN_SYMBOL_COMMA_HYPHEN);      // ￥1,500-
+    echo \Wafu::yen(1500, YEN_SYMBOL_NO_COMMA_HYPHEN);   // ￥1500-
 
 
 **Consumption Tax（消費税）**

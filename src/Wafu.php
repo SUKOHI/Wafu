@@ -682,6 +682,12 @@ class Wafu {
     const YEN_SYMBOL_COMMA_HYPHEN = 4;
     const YEN_SYMBOL_NO_COMMA_HYPHEN = 5;
 
+    public function yen($number, $mode_id = 0) {
+
+        return $this->yenFormat($number, $mode_id);
+
+    }
+
     public function yenFormat($number, $mode_id = 0) {
 
         $yen = '';
