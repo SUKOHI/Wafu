@@ -211,6 +211,13 @@ Usage
     echo \Wafu::yenFormat(1500, YEN_SYMBOL_NO_COMMA_HYPHEN);   // ￥1500-
 
 
+**Consumption Tax**
+
+    $dt = new Carbon('2000-01-01');
+    $amount = 1000;
+    echo \Wafu::consumptionTax($dt, $amount);   // 50
+    echo \Wafu::consumptionTax($dt, $amount, $total_flag = true);   // 1050
+
 License
 ====
 

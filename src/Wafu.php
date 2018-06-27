@@ -672,4 +672,36 @@ class Wafu {
 
     }
 
+    public function consumptionTax($dt, $amount, $total_flag = false) {
+
+        if($dt < Carbon::create(1989, 4, 1, 0, 0, 0)) {
+
+            $percentage = 0;
+
+        } else if($dt < Carbon::create(1997, 4, 1, 0, 0, 0)) {
+
+            $percentage = 0.03;
+
+        } else if($dt < Carbon::create(2014, 4, 1, 0, 0, 0)) {
+
+            $percentage = 0.05;
+
+        } else {
+
+            $percentage = 0.08;
+
+        }
+
+        $tax = floor($amount * $percentage);
+
+        if($total_flag) {
+
+            return $amount + $tax;
+
+        }
+
+        return $tax;
+
+    }
+
 }
