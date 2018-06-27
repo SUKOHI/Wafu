@@ -73,6 +73,29 @@ Usage
     }
     
 1月 〜 12月
+    
+**Old Month Name（旧暦月名）**
+
+    if(\Wafu::hasOldMonthName(2)) {
+
+        echo \Wafu::oldMonthName(2);                // Between 1 and 12
+        echo \Wafu::oldMonthName(Carbon::now());    // Using Carbon
+        var_dump(\Wafu::oldMonthNames($key_flag = true));   // $key_flag means whether you need array keys or not
+
+    }
+    
+1: 睦月,
+2: 如月,
+3: 弥生,
+4: 卯月,
+5: 皐月,
+6: 水無月,
+7: 文月,
+8: 葉月,
+9: 長月,
+10: 神無月,
+11: 霜月,
+12: 師走
 
 
 **Date（日付）**
