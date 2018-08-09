@@ -517,7 +517,14 @@ class Wafu {
 		$era_name = $era_initial = $era_symbol = '';
 		$era_year = 0;
 
-		if ($year >= 1989) {
+        if ($year >= 2019) {
+
+            $era_name = '（新元号）';
+            $era_initial = 'X';
+            $era_symbol = 'xxxxx';
+            $era_year = $year - 2018;
+
+        } elseif ($year >= 1989) {
 
 			$era_name = '平成';
 			$era_initial = 'H';
