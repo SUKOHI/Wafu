@@ -243,9 +243,15 @@ class Wafu {
 
     }
 
-    // Convert Japanese Date
+    // Parse Japanese Date
 
     public function convertJapaneseDate($date) {
+
+        return $this->parseDate($date);
+
+    }
+
+    public function parseDate($date) {
 
         $date = trim(mb_convert_kana($date, 'ns'));
         $week_name_pattern = implode('|', $this->_week_names);
