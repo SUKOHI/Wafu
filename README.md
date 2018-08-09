@@ -10,7 +10,7 @@ Installation
 
 Execute composer command.
 
-    composer require sukohi/wafu:2.*
+    composer require sukohi/wafu:4.*
 
 Register the service provider in app.php
 
@@ -247,6 +247,22 @@ Usage
         ]
         
     */
+    
+    *Note: 
+    New era name after 平成 is not defined yet.  
+    So the parameters are temporarily like the next. 
+    It means that I will change them in near future.  
+    If you prefer to Heisei era like 平成32年, use lower versions.
+    
+    Array
+    (
+        [era_name] => （新元号）
+        [era_initial] => X
+        [era_symbol] => xxxxx
+        [era_year] => 1
+        [era_full] => （新元号）元年
+    )
+
 
 **Convert Japanese Date to Datetime（和暦から西暦へ変換）**
         
