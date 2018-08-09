@@ -438,15 +438,21 @@ class Wafu {
 
     public function prefectureId($prefecture_name) {
 
-        $id = array_search($prefecture_name, $this->_prefectures);
+        $prefecture_id = -1;
 
-        if($id === false) {
+        foreach ($this->_prefectures as $id => $name) {
 
-            return -1;
+            if($prefecture_name == $name ||
+                (preg_match('!'. $prefecture_name .'(県|府|都)!', $name))) {
+
+                $prefecture_id = $id;
+                break;
+
+            }
 
         }
 
-        return $id;
+        return $prefecture_id;
 
     }
 

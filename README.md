@@ -266,21 +266,21 @@ Usage
 
 **Convert Japanese Date to Datetime（和暦から西暦へ変換）**
         
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時11分29秒');
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時11分');
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20時');
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20:11:29');
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土） 20:11');
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月23日（土）');
-    $dt = \Wafu::convertJapaneseDate('平成２７年05月');
-    $dt = \Wafu::convertJapaneseDate('平成２７年');
-    $dt = \Wafu::convertJapaneseDate('H27.5.23（土） 20時11分29秒');
-    $dt = \Wafu::convertJapaneseDate('H27.5.23（土） 20時11分');
-    $dt = \Wafu::convertJapaneseDate('H27.5.23（土） 20:11:29');
-    $dt = \Wafu::convertJapaneseDate('H27.5.23（土） 20:11');
-    $dt = \Wafu::convertJapaneseDate('H27.5.23（土）');
-    $dt = \Wafu::convertJapaneseDate('H27.5');
-    $dt = \Wafu::convertJapaneseDate('H27');
+    $dt = \Wafu::parseDate('平成２７年05月23日（土） 20時11分29秒');
+    $dt = \Wafu::parseDate('平成２７年05月23日（土） 20時11分');
+    $dt = \Wafu::parseDate('平成２７年05月23日（土） 20時');
+    $dt = \Wafu::parseDate('平成２７年05月23日（土） 20:11:29');
+    $dt = \Wafu::parseDate('平成２７年05月23日（土） 20:11');
+    $dt = \Wafu::parseDate('平成２７年05月23日（土）');
+    $dt = \Wafu::parseDate('平成２７年05月');
+    $dt = \Wafu::parseDate('平成２７年');
+    $dt = \Wafu::parseDate('H27.5.23（土） 20時11分29秒');
+    $dt = \Wafu::parseDate('H27.5.23（土） 20時11分');
+    $dt = \Wafu::parseDate('H27.5.23（土） 20:11:29');
+    $dt = \Wafu::parseDate('H27.5.23（土） 20:11');
+    $dt = \Wafu::parseDate('H27.5.23（土）');
+    $dt = \Wafu::parseDate('H27.5');
+    $dt = \Wafu::parseDate('H27');
     
     
 **National Days（祝日・休日）**
