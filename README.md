@@ -134,7 +134,8 @@ Usage
     if(\Wafu::hasPrefecture(28)) {
 
         echo \Wafu::prefecture(28);
-        echo \Wafu::prefectureId('兵庫県');
+        echo \Wafu::prefectureId('兵庫県'); // 28
+        echo \Wafu::prefectureId('東京'); // 13
         var_dump(\Wafu::prefectures());
 
     }

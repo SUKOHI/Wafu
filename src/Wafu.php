@@ -412,9 +412,21 @@ class Wafu {
         '47' => '沖縄県'
     ];
 
-    public function prefectures() {
+    public function prefectures($short_flag = false) {
 
-        return $this->_prefectures;
+        $prefectures = $this->_prefectures;
+
+        if($short_flag) {
+
+            array_walk($prefectures, function(&$name){
+
+                $name = $this->getShortPrefectureName($name);
+
+            });
+
+        }
+
+        return $prefectures;
 
     }
 
@@ -443,7 +455,7 @@ class Wafu {
         foreach ($this->_prefectures as $id => $name) {
 
             if($prefecture_name == $name ||
-                (preg_match('!'. $prefecture_name .'(県|府|都)!', $name))) {
+                $this->getShortPrefectureName($name) == $prefecture_name) {
 
                 $prefecture_id = $id;
                 break;
@@ -453,6 +465,12 @@ class Wafu {
         }
 
         return $prefecture_id;
+
+    }
+
+    private function getShortPrefectureName($name) {
+
+        return preg_replace('!(県|府|都)$!', '', $name);
 
     }
 
