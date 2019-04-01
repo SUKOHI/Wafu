@@ -269,12 +269,14 @@ Usage
 
     Array
     (
-        [era_name] => 昭和
-        [era_initial] => S
-        [era_symbol] => showa
-        [era_year] => 52
-        [era_full] => 昭和52年
+        [name] => 昭和
+        [initial] => S
+        [symbol] => showa
+        [year] => 52
+        [full] => 昭和52年
     )
+    
+    [Note]: The keys changed from ver 4.0.1
 
      */
 
@@ -302,20 +304,49 @@ Usage
         
     */
     
-    *Note: 
-    New era name after 平成 is not defined yet.  
-    So the parameters are temporarily like the next. 
-    It means that I will change them in near future.  
-    If you prefer to Heisei era like 平成32年, use lower versions.
+    $era_names = \Wafu:japaneseEraNames();
+
+    /*  Output
+
+        array:5 [▼
+          0 => "令和"
+          1 => "平成"
+          2 => "昭和"
+          3 => "大正"
+          4 => "明治"
+        ]
     
-    Array
-    (
-        [era_name] => （新元号）
-        [era_initial] => X
-        [era_symbol] => xxxxx
-        [era_year] => 1
-        [era_full] => （新元号）元年
-    )
+    */
+    
+    $era_initials = \Wafu:japaneseEraInitials();
+
+    /*  Output
+
+        array:5 [▼
+          0 => "R"
+          1 => "H"
+          2 => "S"
+          3 => "T"
+          4 => "M"
+        ]
+    
+    */
+    
+    $era_initials = \Wafu:japaneseEraSymbols();
+
+    /*  Output
+
+        array:5 [▼
+          0 => "reiwa"
+          1 => "heisei"
+          2 => "showa"
+          3 => "taisho"
+          4 => "meiji"
+        ]
+    
+    */
+    
+This package already supported new era name, `令和`.
 
 
 **Convert Japanese Date to Datetime（和暦から西暦へ変換）**

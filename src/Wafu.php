@@ -1,8 +1,19 @@
-<?php namespace Sukohi\Wafu;
+<?php namespace
+
+Sukohi\Wafu;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class Wafu {
+
+    const JAPANESE_ERAS = [
+        ['year' => 2018, 'name' => '令和', 'initial' => 'R', 'symbol' => 'reiwa'],
+        ['year' => 1988, 'name' => '平成', 'initial' => 'H', 'symbol' => 'heisei'],
+        ['year' => 1925, 'name' => '昭和', 'initial' => 'S', 'symbol' => 'showa'],
+        ['year' => 1911, 'name' => '大正', 'initial' => 'T', 'symbol' => 'taisho'],
+        ['year' => 1867, 'name' => '明治', 'initial' => 'M', 'symbol' => 'meiji']
+    ];
 
     public function __construct() {
 
@@ -71,7 +82,7 @@ class Wafu {
 
         }
 
-        return array_get($this->_week_names, $week_no, '');
+        return Arr::get($this->_week_names, $week_no, '');
 
     }
 
@@ -104,7 +115,7 @@ class Wafu {
 
         }
 
-        return array_get($this->longWeekNames(), $week_no, '');
+        return Arr::get($this->longWeekNames(), $week_no, '');
 
     }
 
@@ -123,7 +134,7 @@ class Wafu {
 
         }
 
-        return array_get($this->_month_names, $month_no, '');
+        return Arr::get($this->_month_names, $month_no, '');
         
     }
 
@@ -149,7 +160,7 @@ class Wafu {
 
         }
 
-        return array_get($this->_old_month_names, $month_no, '');
+        return Arr::get($this->_old_month_names, $month_no, '');
 
     }
 
@@ -260,23 +271,25 @@ class Wafu {
             '!\(('. $week_name_pattern .')\）!'
         ];
         $date = preg_replace($replacements, '', $date);
+        $era_name_pattern = implode('|', $this->japaneseEraNames());
+        $era_initial_pattern = implode('|', $this->japaneseEraInitials());
         $patterns = [
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分([\d]+)!',
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分!',
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時!',
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+):([\d]+)!',
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+)!',
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月([\d]+)日!',
-            '!((明治|大正|昭和|平成)[\d]+年)([\d]+)月!',
-            '!(明治|大正|昭和|平成[\d]+)年!',
-            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分([\d]+)!',
-            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分!',
-            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+)時!',
-            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+):([\d]+)!',
-            '!((M|T|S|H)[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+)!',
-            '!((M|T|S|H)[\d]+).([\d]+).([\d]+)!',
-            '!((M|T|S|H)[\d]+).([\d]+)!',
-            '!((M|T|S|H)[\d]+)!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分([\d]+)!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時([\d]+)分!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月([\d]+)日 ([\d]+)時!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+):([\d]+)!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月([\d]+)日 ([\d]+):([\d]+)!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月([\d]+)日!',
+            '!(('. $era_name_pattern .')[\d]+年)([\d]+)月!',
+            '!(('. $era_name_pattern .')[\d]+)年!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分([\d]+)!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+).([\d]+) ([\d]+)時([\d]+)分!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+).([\d]+) ([\d]+)時!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+):([\d]+)!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+).([\d]+) ([\d]+):([\d]+)!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+).([\d]+)!',
+            '!(('. $era_initial_pattern .')[\d]+).([\d]+)!',
+            '!(('. $era_initial_pattern .')[\d]+)!',
         ];
 
         foreach ($patterns as $index => $pattern) {
@@ -544,55 +557,29 @@ class Wafu {
 
     public function japaneseEra($year) {
 
-		$era_name = $era_initial = $era_symbol = '';
-		$era_year = 0;
+        foreach(self::JAPANESE_ERAS as $era) {
 
-        if ($year >= 2019) {
+            $base_year = $era['year'];
+            $era_name = $era['name'];
 
-            $era_name = '（新元号）';
-            $era_initial = 'X';
-            $era_symbol = 'xxxxx';
-            $era_year = $year - 2018;
+            if($year > $base_year) {
 
-        } elseif ($year >= 1989) {
+                $era_year = $year - $base_year;
+                $era_year_corrected = ($era_year == 1) ? '元' : $era_year;
 
-			$era_name = '平成';
-			$era_initial = 'H';
-            $era_symbol = 'heisei';
-			$era_year = $year - 1988;
+                return [
+                    'name' => $era_name,
+                    'year' => $era_year,
+                    'initial' => $era['initial'],
+                    'symbol' => $era['symbol'],
+                    'full' => $era_name . $era_year_corrected .'年'
+                ];
 
-		} elseif ($year >= 1926) {
+            }
 
-			$era_name = '昭和';
-			$era_initial = 'S';
-            $era_symbol = 'showa';
-			$era_year = $year - 1925;
+        }
 
-		} elseif ($year >= 1912) {
-
-			$era_name = '大正';
-			$era_initial = 'T';
-            $era_symbol = 'taisho';
-			$era_year = $year - 1911;
-
-		} else {
-
-			$era_name = '明治';
-			$era_initial = 'M';
-            $era_symbol = 'meiji';
-			$era_year = $year - 1867;
-
-		}
-
-		$era_year_corrected = ($era_year == 1) ? '元' : $era_year;
-
-		return [
-			'era_name' => $era_name,
-			'era_initial' => $era_initial,
-            'era_symbol' => $era_symbol,
-			'era_year' => $era_year,
-			'era_full' => $era_name . $era_year_corrected .'年'
-		];
+        return null;
 		
     }
 
@@ -605,46 +592,66 @@ class Wafu {
 
     public function japaneseEraYears() {
 
-        return [
-            'meiji' => '明治',
-            'taisho' => '大正',
-            'showa' => '昭和',
-            'heisei' => '平成'
-        ];
+        return Arr::pluck(self::JAPANESE_ERAS, 'name', 'symbol');
+
+    }
+
+    public function japaneseEraNames() {
+
+        return Arr::pluck(self::JAPANESE_ERAS, 'name');
+
+    }
+
+    public function japaneseEraInitials() {
+
+        return Arr::pluck(self::JAPANESE_ERAS, 'initial');
+
+    }
+
+    public function japaneseEraSymbols() {
+
+        return Arr::pluck(self::JAPANESE_ERAS, 'symbol');
 
     }
 
     public function commonEraYear($japanese_era_year) {
 
-        $year = -1;
-        $japanese_era_year = mb_convert_kana($japanese_era_year, 'n');
+        $japanese_era_year = str_replace('元年', '1年', mb_convert_kana($japanese_era_year, 'n'));
+        $era_name_pattern = implode('|', $this->japaneseEraNames());
+        $era_initial_pattern = implode('|', $this->japaneseEraInitials());
 
-        if(preg_match('!(明治|大正|昭和|平成|M|T|S|H)([0-9]{1,2}|元)[年]?!', $japanese_era_year, $matches)) {
+        if(preg_match('!('. $era_name_pattern .'|'. $era_initial_pattern .')([0-9]+)[年]?!', $japanese_era_year, $matches)) {
 
             $era_name = $matches[1];
-            $era_year = ($matches[2] == '元') ? 1 : $matches[2];
+            $year = intval($matches[2]);
 
-            if($era_name == '平成' || $era_name == 'H') {
+            if($era_name === '明治' || $era_name === 'M') {
 
-                $year = $era_year + 1988;
+                $year += 1867;
 
-            } else if($era_name == '昭和' || $era_name == 'S') {
+            } else if($era_name === '大正' || $era_name === 'T') {
 
-                $year = $era_year + 1925;
+                $year += 1911;
 
-            } else if($era_name == '大正' || $era_name == 'T') {
+            } else if($era_name === '昭和' || $era_name === 'S') {
 
-                $year = $era_year + 1911;
+                $year += 1925;
 
-            } else if($era_name == '明治' || $era_name == 'M') {
+            } else if($era_name === '平成' || $era_name === 'H') {
 
-                $year = $era_year + 1867;
+                $year += 1988;
+
+            } else if($era_name === '令和' || $era_name === 'R') {
+
+                $year += 2018;
 
             }
 
+            return $year;
+
         }
 
-        return $year;
+        return -1;
 
     }
 
