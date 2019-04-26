@@ -1,12 +1,10 @@
-Wafu
-===================
-PHP class that mainly developed for Laravel to provide Japan-Related data like week name, gender and so on.  
+# Wafu
+A Laravel class that mainly developed for Laravel to provide Japan-Related data like week name, gender and so on.  
 (This is for Laravel 5+. [For Laravel 4.2](https://github.com/SUKOHI/Wafu/tree/1.0))
 
 [Demo](http://demo-laravel52.capilano-fw.com/wafu)
 
-Installation
-====
+# Installation
 
 Execute composer command.
 
@@ -28,8 +26,7 @@ Also alias
 
 Note: If you are in L55+, you do NOT need the above because of auto-discovery.
 
-Usage
-====
+# Usage
 
 **Gender（性別）**
 
@@ -54,7 +51,7 @@ Usage
     
 0: 日, 1: 月, 2: 火, 3: 水, 4: 木, 5: 金, 6: 土
 
-**Week Name(Long)（長い月名）**
+**Week Name(Long)（長い曜日）**
 
     echo \Wafu::longWeekName(2);                 // Between 0 and 6
     echo \Wafu::longWeekName(Carbon::now());     // or using Carbon
@@ -417,8 +414,7 @@ This package already supported new era name, `令和`.
 
     }
 
-License
-====
+# License
 
 This package is licensed under the MIT License.
 
