@@ -64,11 +64,11 @@ Usage
 
 **Month Name（月名）**
 
-    if(\Wafu::hasMonthName(2)) {
+    if(\Wafu::hasMonth(2)) {
 
-        echo \Wafu::monthName(2);                // Between 1 and 12
-        echo \Wafu::monthName(Carbon::now());    // Using Carbon
-        var_dump(\Wafu::monthNames($key_flag = true));   // $key_flag means whether you need array keys or not
+        echo \Wafu::month(2);                // Between 1 and 12
+        echo \Wafu::month(Carbon::now());    // Using Carbon
+        var_dump(\Wafu::months($key_flag = true));   // $key_flag means whether you need array keys or not
 
     }
     
@@ -76,11 +76,11 @@ Usage
     
 **Old Month Name（旧暦月名）**
 
-    if(\Wafu::hasOldMonthName(2)) {
+    if(\Wafu::hasOldMonth(2)) {
 
-        echo \Wafu::oldMonthName(2);                // Between 1 and 12
-        echo \Wafu::oldMonthName(Carbon::now());    // Using Carbon
-        var_dump(\Wafu::oldMonthNames($key_flag = true));   // $key_flag means whether you need array keys or not
+        echo \Wafu::oldMonth(2);                // Between 1 and 12
+        echo \Wafu::oldMonth(Carbon::now());    // Using Carbon
+        var_dump(\Wafu::oldMonths($key_flag = true));   // $key_flag means whether you need array keys or not
 
     }
     
@@ -133,7 +133,8 @@ Usage
 
     if(\Wafu::hasPrefecture(28)) {
 
-        echo \Wafu::prefecture(28);
+        echo \Wafu::prefecture(28); // 兵庫県
+        echo \Wafu::prefecture(28, true); // 兵庫
         echo \Wafu::prefectureId('兵庫県'); // 28
         echo \Wafu::prefectureId('東京'); // 13
         var_dump(\Wafu::prefectures());
@@ -263,7 +264,7 @@ Usage
 
 **Japanese Era（和暦）**
 
-    print_r(\Wafu::japaneseEra(1977));
+    print_r(\Wafu::era(1977));
 
     /*  Output
 
@@ -280,18 +281,18 @@ Usage
 
      */
 
-    echo \Wafu::japaneseEraYear(1989);   // 平成元年
+    echo \Wafu::eraYear(1989);   // 平成元年
 
     // Get Common Era from Japanese Era
 
-    echo \Wafu::commonEraYear('昭和52年');  // 1977
-    echo \Wafu::commonEraYear('明治元年');   // 1868
-    echo \Wafu::commonEraYear('S52年');  // 1977
-    echo \Wafu::commonEraYear('M元年');   // 1868
-    echo \Wafu::commonEraYear('S52');    // 1977
-    echo \Wafu::commonEraYear('M1');   // 1868
+    echo \Wafu::commonYear('昭和52年');  // 1977
+    echo \Wafu::commonYear('明治元年');   // 1868
+    echo \Wafu::commonYear('S52年');  // 1977
+    echo \Wafu::commonYear('M元年');   // 1868
+    echo \Wafu::commonYear('S52');    // 1977
+    echo \Wafu::commonYear('M1');   // 1868
     
-    $era_years = \Wafu::japaneseEraYears();
+    $era_years = \Wafu::eraYears();
     
     /*  Output
     
@@ -304,7 +305,7 @@ Usage
         
     */
     
-    $era_names = \Wafu:japaneseEraNames();
+    $era_names = \Wafu::eraNames();
 
     /*  Output
 
@@ -318,7 +319,7 @@ Usage
     
     */
     
-    $era_initials = \Wafu:japaneseEraInitials();
+    $era_initials = \Wafu:eraInitials();
 
     /*  Output
 
@@ -332,7 +333,7 @@ Usage
     
     */
     
-    $era_initials = \Wafu:japaneseEraSymbols();
+    $era_initials = \Wafu:eraSymbols();
 
     /*  Output
 
