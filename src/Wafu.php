@@ -792,6 +792,28 @@ class Wafu {
     }
 
 
+    // Zip
+
+    public function zip($zip, $separator = '-') {
+
+        $zip = mb_convert_kana($zip, 'n');
+        $length = strlen($zip);
+
+        if($length === 7) {
+
+            return substr($zip, 0, 3) . $separator . substr($zip, 3, 4);
+
+        }
+
+        return '';
+
+    }
+
+    public function checkZip($zip, $separator = '-') {
+
+        return preg_match('|^[0-9]{3}'. $separator .'[0-9]{4}$|', $zip);
+
+    }
 
     // Deprecated
 

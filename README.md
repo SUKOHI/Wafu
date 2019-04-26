@@ -405,6 +405,18 @@ This package already supported new era name, `令和`.
     echo \Wafu::consumptionTax($dt, $amount);   // 50
     echo \Wafu::consumptionTax($dt, $amount, $total_flag = true);   // 1050
 
+**Zip code（郵便番号）**
+
+    echo \Wafu::zip('1234567'); // 123-4567
+    echo \Wafu::zip('1234567', '_'); // 123_4567
+    echo \Wafu::zip('１２３４５６７'); // 123-4567
+    
+    if(\Wafu::checkZip('123-4567')) {
+
+        echo 'OK';
+
+    }
+
 License
 ====
 
