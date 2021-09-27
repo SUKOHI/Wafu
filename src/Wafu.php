@@ -413,6 +413,7 @@ class Wafu {
 
             $text = '';
             $symbol = $matches[1];
+            $japanese_era = null;
 
             switch($symbol) {
 
@@ -459,10 +460,11 @@ class Wafu {
                     $text = ($time->format('a') == 'am') ? '午前' : '午後';
                     break;
                 case 'E':
-                    $text = $this->japaneseEraYear($time->year);
+                    $japanese_era = $this->era($time);
+                    $text = $japanese_era['full'];
                     break;
                 case 'e':
-                    $japanese_era = $this->era($time->year);
+                    $japanese_era = $this->era($time);
                     $text = '\\'. $japanese_era['initial'] . $japanese_era['year'];
                     break;
                 case 'F':
@@ -557,23 +559,44 @@ class Wafu {
     // Era
 
     const ERAS = [
-        ['year' => 2018, 'name' => '令和', 'initial' => 'R', 'symbol' => 'reiwa'],
-        ['year' => 1988, 'name' => '平成', 'initial' => 'H', 'symbol' => 'heisei'],
-        ['year' => 1925, 'name' => '昭和', 'initial' => 'S', 'symbol' => 'showa'],
-        ['year' => 1911, 'name' => '大正', 'initial' => 'T', 'symbol' => 'taisho'],
-        ['year' => 1867, 'name' => '明治', 'initial' => 'M', 'symbol' => 'meiji']
+        ['year' => 2018, 'name' => '令和', 'initial' => 'R', 'symbol' => 'reiwa', 'max_year' => null, 'start_date' => '2019-05-01'],
+        ['year' => 1988, 'name' => '平成', 'initial' => 'H', 'symbol' => 'heisei', 'max_year' => 31, 'start_date' => '1989-01-08'],
+        ['year' => 1925, 'name' => '昭和', 'initial' => 'S', 'symbol' => 'showa', 'max_year' => 64, 'start_date' => '1926-12-25'],
+        ['year' => 1911, 'name' => '大正', 'initial' => 'T', 'symbol' => 'taisho', 'max_year' => 15, 'start_date' => '1912-07-30'],
+        ['year' => 1867, 'name' => '明治', 'initial' => 'M', 'symbol' => 'meiji', 'max_year' => 45, 'start_date' => '1868-01-25']
     ];
 
-    public function era($year) {
+    public function era($time) {
 
-        foreach(self::ERAS as $era) {
+        $is_strict = ($time instanceof Carbon);
+        $year = ($is_strict === true) ? $time->year : intval($time);
+
+        foreach(self::ERAS as $index => $era) {
 
             $base_year = $era['year'];
-            $era_name = $era['name'];
 
             if($year > $base_year) {
 
                 $era_year = $year - $base_year;
+
+                if($is_strict === true) {
+
+                    $start_dt = new Carbon($era['start_date']);
+
+                    if($time < $start_dt) {
+
+                        try {
+
+                            $era = self::ERAS[$index + 1];
+                            $era_year = $era['max_year'];
+
+                        } catch(\Exception $e) {}
+
+                    }
+
+                }
+
+                $era_name = $era['name'];
                 $era_year_corrected = ($era_year == 1) ? '元' : $era_year;
 
                 return [
@@ -592,9 +615,9 @@ class Wafu {
 		
     }
 
-    public function eraYear($year) {
+    public function eraYear($time) {
 
-        $era_values = $this->era($year);
+        $era_values = $this->era($time);
         return $era_values['full'];
 
     }

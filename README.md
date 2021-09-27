@@ -265,20 +265,62 @@ Note: If you are in L55+, you do NOT need the above because of auto-discovery.
 
     /*  Output
 
-    Array
-    (
-        [name] => 昭和
-        [initial] => S
-        [symbol] => showa
-        [year] => 52
-        [full] => 昭和52年
-    )
+        Array
+        (
+            [name] => 昭和
+            [initial] => S
+            [symbol] => showa
+            [year] => 52
+            [full] => 昭和52年
+        )
+
+    */
     
     [Note]: The keys changed from ver 4.0.1
 
-     */
+    // Strict mode： You will get "平成31年" by setting Carbon instance that is on 2019-04-30 as the argument.
+
+    $heiseiEndDt = new Carbon('2019-04-30');
+    $heiseiEndEra = \Wafu::era($heiseiEndDt);
+    print_r($heiseiEndEra);
+
+    /* Output
+
+        Array
+        (
+            [name] => 平成
+            [year] => 31
+            [initial] => H
+            [symbol] => heisei
+            [full] => 平成31年
+        )
+
+    */
+
+    $reiwaStartDt = new Carbon('2019-05-01');
+    $reiwaStartEra = \Wafu::era($reiwaStartDt);
+    print_r($reiwaStartEra);
+
+    /* Output
+
+        Array
+        (
+            [name] => 令和
+            [year] => 1
+            [initial] => R
+            [symbol] => reiwa
+            [full] => 令和元年
+        )
+
+    */
 
     echo \Wafu::eraYear(1989);   // 平成元年
+
+    // also in "Strict mode"
+
+    \Wafu::eraYear(new Carbon('2019-04-30'));
+    // 平成31年
+
 
     // Get Common Era from Japanese Era
 
