@@ -9,12 +9,24 @@ class Wafu {
 
     public function __construct() {
 
-        define('YEN_COMMA', 0);
-        define('YEN_NO_COMMA', 1);
-        define('YEN_SYMBOL', 2);
-        define('YEN_SYMBOL_NO_COMMA', 3);
-        define('YEN_SYMBOL_COMMA_HYPHEN', 4);
-        define('YEN_SYMBOL_NO_COMMA_HYPHEN', 5);
+        $constants = [
+            'YEN_COMMA' => 0,
+            'YEN_NO_COMMA' => 1,
+            'YEN_SYMBOL' => 2,
+            'YEN_SYMBOL_NO_COMMA' => 3,
+            'YEN_SYMBOL_COMMA_HYPHEN' => 4,
+            'YEN_SYMBOL_NO_COMMA_HYPHEN' => 5
+        ];
+
+        foreach ($constants as $key => $value) {
+
+            if(! defined($key)) {
+
+                define($key, $value);
+
+            }
+
+        }
 
     }
 
@@ -782,7 +794,7 @@ class Wafu {
 
     }
 
-    public function consumptionTax($dt, $amount, $total_flag = false) {
+    public function consumptionTax($dt, $amount, $total_flag = false, $reduced_tax_rate = false) {
 
         if($dt < Carbon::create(1989, 4, 1, 0, 0, 0)) {
 
@@ -796,17 +808,23 @@ class Wafu {
 
             $percentage = 0.05;
 
-        } else {
+        }  else if($dt < Carbon::create(2019, 10, 1, 0, 0, 0)) {
 
             $percentage = 0.08;
+
+        } else {
+
+            $percentage = ($reduced_tax_rate === true)
+                ? 0.08
+                : 0.1;
 
         }
 
         $tax = floor($amount * $percentage);
 
-        if($total_flag) {
+        if($total_flag === true) {
 
-            return $amount + $tax;
+            return intval($amount + $tax);
 
         }
 

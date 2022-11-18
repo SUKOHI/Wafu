@@ -9,11 +9,17 @@
     ],
     "license": "MIT",
     "require": {
-        "illuminate/support": "^5.0|^6.0"
+        "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0"
     },
     "autoload": {
         "psr-4": {
             "Sukohi\\Wafu\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/",
+            "Sukohi\\Wafu\\Tests\\": "packages/Wafu/tests/"
         }
     },
     "minimum-stability": "stable",

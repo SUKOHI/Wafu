@@ -444,6 +444,13 @@ This package already supported new era name, `令和`.
     echo \Wafu::consumptionTax($dt, $amount);   // 50
     echo \Wafu::consumptionTax($dt, $amount, $total_flag = true);   // 1050
 
+You can change tax rate by using `$reduced_tax_rate` parameter.
+
+ex)
+
+    echo \Wafu::consumptionTax($dt, $amount, $total_flag, $reduced_tax_rate = true); // in 8% tax rate
+    echo \Wafu::consumptionTax($dt, $amount, $total_flag, $reduced_tax_rate = false); // in 10% tax rate
+
 **Zip code（郵便番号）**
 
     echo \Wafu::zip('1234567'); // 123-4567
